@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './index.css';  // This imports Tailwind
 
 function App() {
   const [led1, setLed1] = useState(false);
@@ -8,14 +7,14 @@ function App() {
 
   const fetchStates = async () => {
     try {
-      const res = await axios.get('/api/states');
+      const res = await axios.get('/api/states');   // ← THIS LINE
       setLed1(res.data.led1);
       setLed2(res.data.led2);
     } catch (e) { }
   };
 
   const toggle = async (led) => {
-    await axios.post(`/api/toggle/${led}`);
+    await axios.post(`/api/toggle/${led}`);         // ← THIS LINE
     fetchStates();
   };
 
@@ -27,28 +26,29 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
-      <h1 className="text-3xl font-bold text-blue-600 mb-8">My Home Automation</h1>
-      <div className="w-full max-w-md space-y-6">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4">LED 1</h2>
-          <div className="text-4xl font-bold mb-4">{led1 ? 'ON' : 'OFF'}</div>
+      <h1 className="text-4xl font-bold text-blue-600 mb-10">Home Automation</h1>
+      <div className="space-y-8 max-w-md w-full">
+
+        <div className="bg-white p-8 rounded-xl shadow-lg text-center">
+          <h2 className="text-2xl font-bold mb-4">LED 1</h2>
+          <div className="text-5xl font-bold mb-6">{led1 ? 'ON' : 'OFF'}</div>
           <button
             onClick={() => toggle('led1')}
-            className="w-full py-3 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-          >
+            className="w-full py-4 px-8 bg-blue-600 hover:bg-blue-700 text-white text-xl font-semibold rounded-lg transition">
             {led1 ? 'Turn OFF' : 'Turn ON'}
           </button>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4">LED 2</h2>
-          <div className="text-4xl font-bold mb-4">{led2 ? 'ON' : 'OFF'}</div>
+
+        <div className="bg-white p-8 rounded-xl shadow-lg text-center">
+          <h2 className="text-2xl font-bold mb-4">LED 2</h2>
+          <div className="text-5xl font-bold mb-6">{led2 ? 'ON' : 'OFF'}</div>
           <button
             onClick={() => toggle('led2')}
-            className="w-full py-3 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-          >
+            className="w-full py-4 px-8 bg-blue-600 hover:bg-blue-700 text-white text-xl font-semibold rounded-lg transition">
             {led2 ? 'Turn OFF' : 'Turn ON'}
           </button>
         </div>
+
       </div>
     </div>
   );
