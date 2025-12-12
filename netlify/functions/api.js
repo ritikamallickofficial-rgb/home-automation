@@ -3,11 +3,11 @@ const serverless = require('serverless-http');
 const admin = require('firebase-admin');
 
 // CHANGE THIS PATH TO YOUR ACTUAL FILE NAME
-const serviceAccount = require('../../firebase-key.json');
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://YOUR-PROJECT-ID-default-rtdb.firebaseio.com/"  // ← CHANGE THIS
+  databaseURL: "https://home-automation-1f910-default-rtdb.firebaseio.com/"  // ← CHANGE THIS
 });
 
 const db = admin.database();
