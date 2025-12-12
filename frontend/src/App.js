@@ -6,19 +6,23 @@ function App() {
   const [led2, setLed2] = useState(false);
 
   const fetchStates = async () => {
-    try {
-      const res = await axios.get('/api/states');   // ← THIS LINE
-      setLed1(res.data.led1);
-      setLed2(res.data.led2);
-    } catch (e) { }
-  };
+  try {
+    // CORRECT URL — this one actually works!
+    const res = await axios.get('/.netlify/functions/api/states');
+    setLed1(res.data.led1);
+    setLed2(res.data.led2);
+  } catch (e) { console.error(e); }
+};
 
-  const toggle = async (led) => {
-    await axios.post(`/api/toggle/${led}`);         // ← THIS LINE
+const toggle = async (led) => {
+  try {
+    // CORRECT URL
+    await axios.post(`/.netlify/functions/api/toggle/${led}`);
     fetchStates();
-  };
-
-  useEffect(() => {
+  } catch (e) { console.error(e); }
+};
+  
+useEffect(() => {
     fetchStates();
     const interval = setInterval(fetchStates, 5000);
     return () => clearInterval(interval);
